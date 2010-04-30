@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <script type="text/javascript" src="jquery-1.4.2.min.js">
+        </script>
+        <script type="text/javascript" src="jquery-ui-1.8.custom.min.js">
+        </script>
+        <link rel="stylesheet" type="text/css" href="jquery-ui-1.8.custom.css">
+        </link>
+        <script>
+            $(function(){
+                $("#query").autocomplete({
+                    minLength: 2,
+                    source: function(request, response){
+                        $.getJSON("http://api.stackoverflow.com/0.7/tags?key=0xDEADBEEF&filter=" + request.term, function(data){
+                            data.tags.sort(function(a, b){
+                                var gona;
+                                if (a.name == b.name) {
+                                    gona = 0;
+                                }
+                                else {
+                                    gona = (a.name < b.name) ? -1 : 1;
+                                }
+                                return gona;
+                            });
+                            response($.map(data.tags, function(data){
+                                if (data.name.indexOf(request.term) == 0) {
+                                    return {
+                                        label: data.name,
+                                        value: data.name
+                                    };
+                                }
+                            }).slice(0, 5));
+                        });
+                    }
+                });
+                
+                
+                $('#search').click(function(){
+                    $.getJSON("http://api.stackoverflow.com/0.7/search?key=0xDEADBEEF&tagged=" + $('#query').val(), function(data){
+                    for(var i = 0; i< data.questions.length; i++){
+                    alert(data.questions[i].title);
+                    }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body style="background-color:aqua">
+        Search by tag: <input type="text" id="query"/><input type="button" value="search" id="search"/>
+    </body>
+</html>
