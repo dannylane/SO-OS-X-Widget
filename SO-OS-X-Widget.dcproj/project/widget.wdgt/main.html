@@ -47,6 +47,16 @@
         </script>
     </head>
     <body style="background-color:aqua">
-        Search by tag: <input type="text" id="query"/><input type="button" value="search" id="search"/>
+    <br/>
+           <input type="checkbox" value="intitle" name="searchby"/>Search by title: <input type="text" id="title"/>
+           <hr/>
+ <input type="radio" value="tagged" name="searchby"/>Search by tag: <input type="text" id="tag"/>
+
+    <br/><input type="radio" value="nottagged" name="searchby"/>untagged
+<hr/>
+    <input type="radio" name="sortby" value="activity" checked="true"/>Activity<br/>
+        <input type="radio" name="sortby" value="views"/>Views<br/>
+            <input type="radio" name="sortby" value="creation"/>Createion<br/>
+                <input type="radio" name="sortby" value="votes"/>Votes<br/>
     </body>
 </html>
